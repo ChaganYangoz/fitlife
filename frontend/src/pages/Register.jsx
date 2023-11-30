@@ -2,17 +2,36 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 export const Register = () => {
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const user = {
 			name: e.target[0].value,
-			lastname: e.target[1].value,
+			surname: e.target[1].value,
 			email: e.target[2].value,
-			pass: e.target[3].value,
+			password: e.target[3].value,
 			phone: e.target[4].value,
 			date: e.target[5].value,
 			gender: e.target[6].value,
 		};
+		try {
+			const response = await fetch('http://localhost:3000/users', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(user),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				console.log('User Created:', data);
+				// Başarılı bir şekilde kullanıcı oluşturulduğunda yapılacak işlemler burada yapılabilir
+			} else {
+				console.error('User Creation failed');
+			}
+		} catch (error) {
+			console.error('Error:', error);
+		}
 	};
 
 	return (
