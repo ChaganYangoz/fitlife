@@ -1,0 +1,22 @@
+[
+	{
+		"ID": 1,
+		"Name": "John",
+		"Lastname": "Doe",
+		"Email": "johndoe@example.com",
+		"Password": "examplepassword123",
+		"Phone": "123-456-7890",
+		"DateOfBirth": "1990-05-15",
+		"Gender": "Male"
+	},
+	{
+		"ID": 2,
+		"Name": "Jane",
+		"Lastname": "Smith",
+		"Email": "janesmith@example.com",
+		"Password": "securepassword456",
+		"Phone": "987-654-3210",
+		"DateOfBirth": "1985-09-20",
+		"Gender": "Female"
+	}
+]
