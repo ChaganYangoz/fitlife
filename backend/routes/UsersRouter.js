@@ -4,7 +4,9 @@ var router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const { name, surname, email, password, phone, active, gender, mark, begindate } = req.body;
+    const { name, surname, email, password, phone, gender, mark, date } = req.body;
+    const active = req.body.active ?? true;
+    const role = req.body.role ?? 1;
 
     // E-posta adresi zaten varsa hata döndür
     const existingUser = await User.findOne({ email });
@@ -20,9 +22,10 @@ router.post('/register', async (req, res) => {
       password,
       phone,
       active,
+      role,
       gender,
       mark,
-      begindate,
+      date,
     });
     res.status(201).json({ message: 'User Created!!', user: newUser });
   } catch (error) {
@@ -40,7 +43,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    res.status(200).json({ message: 'Login successful', user });
+    res.status(200).json({message: 'Login successful', user});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

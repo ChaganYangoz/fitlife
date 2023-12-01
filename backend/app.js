@@ -54,6 +54,10 @@ app.use('/nutritionPlan', nutritionPlanRouter);
 let usercoachRouter = require('./routes/UserCoachRouter');
 app.use('/usercoach', usercoachRouter);
 
+
+let userGetRouter = require('./routes/UserGetRouter');
+app.use('/users', userGetRouter);
+
 app.use(function (req, res, next) {
 	next(createError(404, 'Not Found'));
 });
