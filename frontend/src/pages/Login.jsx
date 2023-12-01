@@ -21,7 +21,7 @@ export const Login = (props) => {
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log('info sent:', data);
+				console.log('info sent:', data.user._id);
 				history.push('/user');
 			} else {
 				console.error('User Login failed');
