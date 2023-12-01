@@ -1,13 +1,34 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 
 export const Login = (props) => {
-	const handleSubmit = (e) => {
+	const history = useHistory();
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const user = {
 			email: e.target[0].value,
-			pass: e.target[0].value,
+			password: e.target[1].value,
 		};
+		try {
+			const response = await fetch('http://localhost:3000/users/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(user),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				console.log('info sent:', data);
+				history.push('/user');
+			} else {
+				console.error('User Login failed');
+			}
+		} catch (error) {
+			console.error('Error:', error);
+		}
 	};
 
 	return (

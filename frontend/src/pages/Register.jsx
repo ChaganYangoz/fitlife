@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export const Register = () => {
+	const history = useHistory();
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const user = {
@@ -14,17 +17,21 @@ export const Register = () => {
 			gender: e.target[6].value,
 		};
 		try {
-			const response = await fetch('http://localhost:3000/users', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(user),
-			});
+			const response = await fetch(
+				'http://localhost:3000/users/register',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(user),
+				}
+			);
 
 			if (response.ok) {
 				const data = await response.json();
 				console.log('User Created:', data);
+				history.push('/login');
 				// Başarılı bir şekilde kullanıcı oluşturulduğunda yapılacak işlemler burada yapılabilir
 			} else {
 				console.error('User Creation failed');
