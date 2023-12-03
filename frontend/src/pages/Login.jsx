@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { useHistory } from 'react-router-dom';
+import { useUserSession } from './user-context';
 
 export const Login = (props) => {
+	const { logIn } = useUserSession();
 	const history = useHistory();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -21,7 +23,8 @@ export const Login = (props) => {
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log('info sent:', data.user._id);
+				//data.user._id
+				logIn(data.user);
 				history.push('/user');
 			} else {
 				console.error('User Login failed');
