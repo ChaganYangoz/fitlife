@@ -5,9 +5,13 @@ const coachSchema = new mongoose.Schema({
     surname: String,
     email: String,
     password: String,
+    gender: String,
+    phone: Number,
     proficiency: Number,
     experience: String,
-    phone: Number
+    active: Boolean,
+    date: Date,
+    photo: String
 });
 
 const Coach = mongoose.model('Coachs', coachSchema);

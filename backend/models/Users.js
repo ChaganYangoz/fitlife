@@ -8,10 +8,10 @@ const usersSchema = new mongoose.Schema({
     password: String,
     phone: Number,
     active: Boolean,
-    role: Number,
     gender: String,
     mark: String,
-    date: Date
+    date: Date,
+    photo: String
 });
 
 const Users = mongoose.model('Users', usersSchema);
