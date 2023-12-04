@@ -1,4 +1,5 @@
 const Coach = require('../models/Coach');
+const bcrypt = require('bcryptjs');
 var express = require('express');
 var router = express.Router();
 
@@ -7,11 +8,13 @@ router.post('/', async (req, res) => {
     const {name, surname, email, password, gender, proficiency, experience, phone, date, photo} = req.body;
     const active = req.body.active ?? true;
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newCoach = await Coach.create({
       name,
       surname,
       email,
-      password,
+      password: hashedPassword,
       gender,
       proficiency,
       experience,
