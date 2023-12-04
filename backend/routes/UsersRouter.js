@@ -57,4 +57,45 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/update', async (req, res) => {
+  try {
+    const { email, updatedData } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Güncellenecek verileri al
+    const {
+      name,
+      surname,
+      password,
+      phone,
+      active,
+      gender,
+      mark,
+      date,
+      photo
+    } = updatedData;
+
+    // Yeni verileri kullanarak kullanıcıyı güncelle
+    user.name = name || user.name;
+    user.surname = surname || user.surname;
+    user.password = password || user.password;
+    user.phone = phone || user.phone;
+    user.active = active ?? user.active;
+    user.gender = gender || user.gender;
+    user.mark = mark || user.mark;
+    user.date = date || user.date;
+    user.photo = photo || user.photo;
+
+    await user.save();
+    res.status(200).json({ message: 'User updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;
