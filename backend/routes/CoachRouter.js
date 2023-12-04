@@ -18,11 +18,13 @@ router.post("/register", async (req, res) => {
     } = req.body;
     const active = req.body.active ?? true;
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newCoach = await Coach.create({
       name,
       surname,
       email,
-      password,
+      password: hashedPassword,
       gender,
       proficiency,
       experience,
