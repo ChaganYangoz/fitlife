@@ -57,20 +57,22 @@ router.get('/', async (req, res) => {
   }
 });
 
+/*
 router.post('/update', async (req, res) => {
   try {
-    const { email, updatedData } = req.body;
+    const { id } = req.params;
 
-    const user = await User.findOne({ email });
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Güncellenecek verileri al
+    const updatedData = req.body;
     const {
       name,
       surname,
       password,
+      email,
       phone,
       active,
       gender,
@@ -83,6 +85,7 @@ router.post('/update', async (req, res) => {
     user.name = name || user.name;
     user.surname = surname || user.surname;
     user.password = password || user.password;
+    user.email = email || user.email;
     user.phone = phone || user.phone;
     user.active = active ?? user.active;
     user.gender = gender || user.gender;
@@ -91,6 +94,24 @@ router.post('/update', async (req, res) => {
     user.photo = photo || user.photo;
 
     await user.save();
+    res.status(200).json({ message: 'User updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+*/
+
+
+router.post('/update', async (req, res) => {
+  try {
+    const { _id, updatedData } = req.body;
+
+    const user = await User.findByIdAndUpdate(_id, updatedData, { new: true });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     res.status(200).json({ message: 'User updated successfully', user });
   } catch (error) {
     res.status(500).json({ error: error.message });
