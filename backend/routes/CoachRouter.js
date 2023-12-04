@@ -1,11 +1,21 @@
-const Coach = require('../models/Coach');
-const bcrypt = require('bcryptjs');
-var express = require('express');
+const Coach = require("../models/Coach");
+var express = require("express");
 var router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
-    const {name, surname, email, password, gender, proficiency, experience, phone, date, photo} = req.body;
+    const {
+      name,
+      surname,
+      email,
+      password,
+      gender,
+      proficiency,
+      experience,
+      phone,
+      date,
+      photo,
+    } = req.body;
     const active = req.body.active ?? true;
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -21,15 +31,15 @@ router.post('/', async (req, res) => {
       phone,
       active,
       date,
-      photo
+      photo,
     });
-    res.status(201).json({ message: 'Coach Created!!', coach: newCoach });
+    res.status(201).json({ message: "Coach Created!!", coach: newCoach });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-router.get('/', async (req, res) => {
+router.get("/showall", async (req, res) => {
   try {
     const allCoaches = await Coach.find({});
     res.status(200).json({ coaches: allCoaches });
@@ -37,6 +47,5 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 module.exports = router;
