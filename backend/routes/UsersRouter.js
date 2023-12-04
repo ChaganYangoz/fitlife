@@ -38,14 +38,18 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await User.findOne({ email }); // E-postaya göre kullanıcıyı bul
 
-		if (!user || user.password !== password) {
-			return res.status(401).json({ message: 'Invalid email or password' });
-		}
+    bcrypt.compare(password, hashedPassword, (err, result) => {
+      if (err) {
+        // Hata yönetimi yapılır
+      } else if (result) {
+        res.status(200).json({ message: 'Login successful', user });
+      } else {
+        res.status(401).json({ message: 'Invalid email or password' });
+      }
+    });
 
-    res.status(200).json({ message: 'Login successful', user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
