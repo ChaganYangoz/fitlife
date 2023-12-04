@@ -1,4 +1,5 @@
 const User = require("../models/Users");
+const bcrypt = require('bcryptjs');
 var express = require("express");
 var router = express.Router();
 
@@ -13,6 +14,7 @@ router.post("/register", async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: "Email already exists" });
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // E-posta yoksa, yeni kullanıcı oluştur
     const newUser = await User.create({

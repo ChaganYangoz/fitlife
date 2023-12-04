@@ -1,4 +1,5 @@
 const Coach = require("../models/Coach");
+const bcrypt = require('bcryptjs');
 var express = require("express");
 var router = express.Router();
 
