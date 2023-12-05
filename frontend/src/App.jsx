@@ -11,6 +11,7 @@ import AdminPanel from "./pages/AdminPanel";
 import { UserSessionContext } from "./pages/user-context";
 import { TrainerSessionContext } from "./pages/coach-context";
 import { CoachProfile } from "./pages/CoachProfile";
+import { UpdateCoach } from "./pages/UpdateCoach";
 
 function App() {
   const [user, setUser] = useState({});
@@ -18,6 +19,7 @@ function App() {
 
   function logInTrainer(trainerInfo) {
     setTrainer({
+      photo: trainerInfo.photo,
       id: trainerInfo._id,
       name: trainerInfo.name,
       surname: trainerInfo.surname,
@@ -32,6 +34,7 @@ function App() {
 
   function logIn(userInfo) {
     setUser({
+      photo: userInfo.photo,
       id: userInfo._id,
       name: userInfo.name,
       surname: userInfo.surname,
@@ -40,34 +43,40 @@ function App() {
       phone: userInfo.phone,
       gender: userInfo.gender,
       date: userInfo.date,
+      mark: userInfo.mark,
     });
   }
   return (
     <UserSessionContext.Provider value={{ user, logIn }}>
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/user">
-              <UserProfile />
-            </Route>
-            <Route path="/userupdate">
-              <UpdateUser />
-            </Route>
-            <Route path="/admin">
-              <AdminPanel />
-            </Route>
-            <Route path="/coach">
-              <CoachProfile />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+      <TrainerSessionContext.Provider value={{ trainer, logInTrainer }}>
+        <Router>
+          <div className="App">
+            <Switch>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/user">
+                <UserProfile />
+              </Route>
+              <Route path="/userupdate">
+                <UpdateUser />
+              </Route>
+              <Route path="/admin">
+                <AdminPanel />
+              </Route>
+              <Route path="/coach">
+                <CoachProfile />
+              </Route>
+              <Route path="/coachupdate">
+                <UpdateCoach />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </TrainerSessionContext.Provider>
     </UserSessionContext.Provider>
   );
 }

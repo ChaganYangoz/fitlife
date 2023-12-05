@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email }); // E-postaya göre kullanıcıyı bul
 
-    bcrypt.compare(password, hashedPassword, (err, result) => {
+    bcrypt.compare(password, user.password, (err, result) => {
       if (err) {
         // Hata yönetimi yapılır
       } else if (result) {
