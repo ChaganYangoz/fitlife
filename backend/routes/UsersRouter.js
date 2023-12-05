@@ -41,9 +41,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email }); // E-postaya göre kullanıcıyı bul
 
     bcrypt.compare(password, hashedPassword, (err, result) => {
-      if (err) {
-        // Hata yönetimi yapılır
-      } else if (result) {
+      if (result) {
         res.status(200).json({ message: 'Login successful', user });
       } else {
         res.status(401).json({ message: 'Invalid email or password' });
