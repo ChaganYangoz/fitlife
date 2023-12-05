@@ -1,30 +1,31 @@
 import { useState, useEffect } from "react";
-import { useUserSession } from "./user-context";
+import { useTrainerSession } from "./coach-context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-export const UpdateUser = () => {
-  const { logIn } = useUserSession();
+export const UpdateCoach = () => {
   const history = useHistory();
+  const { logInTrainer } = useTrainerSession();
 
-  const { user } = useUserSession();
+  const { trainer } = useTrainerSession();
 
-  const [name1, setName] = useState(user.name);
-  const [surname1, setSurname] = useState(user.surname);
-  const [email1, setEmail] = useState(user.email);
-  const [password1, setPassword] = useState(user.password);
-  const [phone1, setPhone] = useState(user.phone);
-  const [date1, setDate] = useState(user.date);
-  const [gender1, setGender] = useState(user.gender);
-  const [image, setImage] = useState(user.photo);
+  const [name1, setName] = useState(trainer.name);
+  const [surname1, setSurname] = useState(trainer.surname);
+  const [email1, setEmail] = useState(trainer.email);
+  const [password1, setPassword] = useState(trainer.password);
+  const [phone1, setPhone] = useState(trainer.phone);
+  const [date1, setDate] = useState(trainer.date);
+  const [gender1, setGender] = useState(trainer.gender);
+  const [image, setImage] = useState(trainer.photo);
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   };
+  console.log(trainer);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const member = {
+    const person = {
       photo: image,
       name: name1,
       surname: surname1,
@@ -33,22 +34,23 @@ export const UpdateUser = () => {
       phone: phone1,
       date: date1,
       gender: gender1,
-      mark: e.target[8].value,
+      experience: e.target[8].value,
+      proficiency: e.target[9].value,
     };
     try {
-      const response = await fetch("http://localhost:3000/users/update", {
+      const response = await fetch("http://localhost:3000/coach/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ _id: user.id, updatedData: member }),
+        body: JSON.stringify({ _id: trainer.id, updatedData: person }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log("User updated:", data);
-        logIn(data.user);
-        history.push("/user");
+        console.log("Coach updated:", data);
+        logInTrainer(data.coach);
+        history.push("/coach");
       } else {
         console.error("failed");
       }
@@ -101,20 +103,42 @@ export const UpdateUser = () => {
         <label htmlFor="gender">Gender :</label>
 
         <select id="gender">
-          <option value="male" selected={user.gender === "Male"}>
+          <option value="male" selected={trainer.gender === "Male"}>
             Male
           </option>
-          <option value="female" selected={user.gender === "Female"}>
+          <option value="female" selected={trainer.gender === "Female"}>
             Female
           </option>
         </select>
-        <label htmlFor="">Choose your mark:</label>
+        <label htmlFor="">Choose your experience:</label>
         <select name="mark" id="mark">
-          <option value="Gain Weight">Gain Weight</option>
-          <option value="Loss Weight">Lose Weight</option>
-          <option value="Maintain Weight">Maintain Weight</option>
-          <option value="Gain Muscle">Gain Muscle</option>
+          <option
+            selected={trainer.experience === "Gain Weight"}
+            value="Gain Weight"
+          >
+            Gain Weight
+          </option>
+
+          <option
+            selected={trainer.experience === "Loss Weight"}
+            value="Loss Weight"
+          >
+            Lose Weight
+          </option>
+          <option
+            selected={trainer.experience === "Maintain Weight"}
+            value="Maintain Weight"
+          >
+            Maintain Weight
+          </option>
+          <option
+            selected={trainer.experience === "Gain Muscle"}
+            value="Gain Muscle"
+          >
+            Gain Muscle
+          </option>
         </select>
+        <input type="number" max={10} defaultValue={trainer.proficiency} />
         <button type="submit">Submit</button>
       </form>
     </div>

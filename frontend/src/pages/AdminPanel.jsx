@@ -6,7 +6,6 @@ const AdminPanel = () => {
   const { logIn } = useUserSession();
   const history = useHistory();
 
-  const [selectedId, setSelectedID] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [role, setRole] = useState("");
   const [data, setData] = useState(null);
@@ -184,10 +183,10 @@ const AdminPanel = () => {
                 </>
               )}
               <select name="mark" id="mark">
-                <option value="gainweight">Gain Weight</option>
-                <option value="loseweight">Lose Weight</option>
-                <option value="maintainweight">Maintain Weight</option>
-                <option value="gainmuscle">Gain Muscle</option>
+                <option value="Gain Weight">Gain Weight</option>
+                <option value="Loss Weight">Lose Weight</option>
+                <option value="Maintain Weight">Maintain Weight</option>
+                <option value="Gain Muscle">Gain Muscle</option>
               </select>
               {role === "coach" && (
                 <>

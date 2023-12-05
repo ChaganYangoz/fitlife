@@ -82,3 +82,9 @@ input {
   text-decoration: none;
   cursor: pointer;
 }
+
+.pp {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}

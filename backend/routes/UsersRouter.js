@@ -1,5 +1,5 @@
 const User = require("../models/Users");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 var express = require("express");
 var router = express.Router();
 
@@ -38,27 +38,22 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }); // E-postaya göre kullanıcıyı bul
 
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    // Compare entered password with hashed password from the database
     bcrypt.compare(password, user.password, (err, result) => {
-      if (result) {
-        return res.status(200).json({ message: 'Login successful', user });
+      if (err) {
+        // Hata yönetimi yapılır
+      } else if (result) {
+        res.status(200).json({ message: "Login successful", user });
       } else {
-        return res.status(401).json({ message: 'Invalid email or password' });
+        res.status(401).json({ message: "Invalid email or password" });
       }
     });
-
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 
 router.get("/showall", async (req, res) => {
   try {
@@ -68,50 +63,6 @@ router.get("/showall", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-/*
-router.post('/update', async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    const updatedData = req.body;
-    const {
-      name,
-      surname,
-      password,
-      email,
-      phone,
-      active,
-      gender,
-      mark,
-      date,
-      photo
-    } = updatedData;
-
-    // Yeni verileri kullanarak kullanıcıyı güncelle
-    user.name = name || user.name;
-    user.surname = surname || user.surname;
-    user.password = password || user.password;
-    user.email = email || user.email;
-    user.phone = phone || user.phone;
-    user.active = active ?? user.active;
-    user.gender = gender || user.gender;
-    user.mark = mark || user.mark;
-    user.date = date || user.date;
-    user.photo = photo || user.photo;
-
-    await user.save();
-    res.status(200).json({ message: 'User updated successfully', user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-*/
 
 router.post("/update", async (req, res) => {
   try {

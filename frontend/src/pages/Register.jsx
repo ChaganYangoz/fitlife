@@ -1,101 +1,81 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import React, { useState } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const Register = () => {
-	const history = useHistory();
+  const history = useHistory();
+  const [image, setImage] = useState(null);
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		const user = {
-			name: e.target[0].value,
-			surname: e.target[1].value,
-			email: e.target[2].value,
-			password: e.target[3].value,
-			phone: e.target[4].value,
-			date: e.target[5].value,
-			gender: e.target[6].value,
-		};
-		try {
-			const response = await fetch(
-				'http://localhost:3000/users/register',
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(user),
-				}
-			);
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
 
-			if (response.ok) {
-				const data = await response.json();
-				console.log('User Created:', data);
-				history.push('/login');
-				// Başarılı bir şekilde kullanıcı oluşturulduğunda yapılacak işlemler burada yapılabilir
-			} else {
-				console.error('User Creation failed');
-			}
-		} catch (error) {
-			console.error('Error:', error);
-		}
-	};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = {
+      photo: image,
+      name: e.target[0].value,
+      surname: e.target[1].value,
+      email: e.target[2].value,
+      password: e.target[3].value,
+      phone: e.target[4].value,
+      date: e.target[5].value,
+      gender: e.target[6].value,
+    };
+    try {
+      const response = await fetch("http://localhost:3000/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
 
-	return (
-		<div className='form-content'>
-			<h1>FitLife</h1>
-			<h2>Register</h2>
-			<form
-				onSubmit={handleSubmit}
-				action='http://localhost:5173/register'
-				method='POST'
-			>
-				<input
-					required
-					type='text'
-					placeholder='Name'
-				/>
-				<input
-					required
-					type='text'
-					placeholder='Lastname'
-				/>
-				<input
-					required
-					type='email'
-					placeholder='E-mail'
-				/>
-				<input
-					required
-					type='text'
-					placeholder='Password'
-				/>
-				<input
-					required
-					type='tel'
-					placeholder='Phone'
-				/>
-				<input
-					type='date'
-					required
-				/>
-				<div>
-					<label htmlFor='gender'>Choose you gender :</label>
+      if (response.ok) {
+        const data = await response.json();
+        console.log("User Created:", data);
+        history.push("/login");
+        // Başarılı bir şekilde kullanıcı oluşturulduğunda yapılacak işlemler burada yapılabilir
+      } else {
+        console.error("User Creation failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
-					<select id='gender'>
-						<option value='male'>Male</option>
-						<option value='female'>Female</option>
-					</select>
-				</div>
+  return (
+    <div className="form-content">
+      <h1>FitLife</h1>
+      <h2>Register</h2>
+      <form
+        onSubmit={handleSubmit}
+        action="http://localhost:5173/register"
+        method="POST"
+      >
+        <input required type="text" placeholder="Name" />
+        <input required type="text" placeholder="Lastname" />
+        <input required type="email" placeholder="E-mail" />
+        <input required type="text" placeholder="Password" />
+        <input required type="tel" placeholder="Phone" />
+        <input type="date" required />
+        <div>
+          <label htmlFor="gender">Choose you gender :</label>
 
-				<button type='submit'>Register</button>
-			</form>
-			<Link
-				className='linkbtn'
-				to='/login'
-			>
-				Already have an account? Login here.
-			</Link>
-		</div>
-	);
+          <select id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <label htmlFor="">Photo:</label>
+        <input type="file" onChange={onImageChange} className="filetype" />
+        <button type="submit">Register</button>
+      </form>
+      <Link className="linkbtn" to="/login">
+        Already have an account? Login here.
+      </Link>
+    </div>
+  );
 };
