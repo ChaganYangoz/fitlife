@@ -1,13 +1,15 @@
 import { useTrainerSession } from "./coach-context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Navbar } from "./Navbar";
 
 export const CoachProfile = () => {
   const { trainer } = useTrainerSession();
   const history = useHistory();
 
   return (
-    <div className="container">
-      <div>
+    <div className="sidebox">
+      <Navbar />
+      <div className="midbar">
         <img className="pp" alt="preview image" src={trainer.photo} />
 
         <div>
@@ -21,14 +23,14 @@ export const CoachProfile = () => {
           {trainer.proficiency} <br />
           {trainer.experience}
         </div>
+        <button
+          onClick={() => {
+            history.push("/coachupdate");
+          }}
+        >
+          Update
+        </button>
       </div>
-      <button
-        onClick={() => {
-          history.push("/coachupdate");
-        }}
-      >
-        Update
-      </button>
     </div>
   );
 };

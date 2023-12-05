@@ -64,7 +64,7 @@ export const UserProfile = () => {
     }
   };*/
   return (
-    <div className="container">
+    <div className="usercontainer">
       <div>
         <img className="pp" alt="preview image" src={user.photo} />
         <div>
