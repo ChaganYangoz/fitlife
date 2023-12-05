@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
 const trainingProgSchema= new mongoose.Schema({
-    training_id: Object,
+    name: String,
     user_id: Object,
+    coach_id: Object
 });
 
 const TrainingProg = mongoose.model('TrainingProg', trainingProgSchema);
