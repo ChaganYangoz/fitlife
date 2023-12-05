@@ -15,4 +15,24 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const admin = await Admin.findOne({email}); // E-postaya göre kullanıcıyı bul
+
+    bcrypt.compare(password, admin.password, (err, result) => {
+      if (err) {
+        // Hata yönetimi yapılır
+      } else if (result) {
+        res.status(200).json({ message: "Login successful", admin });
+      } else {
+        res.status(401).json({ message: "Invalid email or password" });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
