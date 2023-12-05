@@ -156,7 +156,23 @@ body {
 }
 
 .usercontainer {
-  width: 80vw;
+  display: flex;
+  width: 100vw;
   align-items: center;
+  justify-content: space-between;
+}
+
+.userProf {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.userList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }

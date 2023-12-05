@@ -1,14 +1,18 @@
 const TrainingProg = require("../models/TrainingProgram");
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-router.post('/', async (req, res) => {
-    try {
-      const {name, user_id, coach_id} = req.body;
-      const newTrainingProg = await TrainingProg.create({
-        name,
-        user_id,
-        coach_id
+router.post("/add", async (req, res) => {
+  try {
+    const { name, user_id, coach_id } = req.body;
+    const newTrainingProg = await TrainingProg.create({
+      name,
+      user_id,
+      coach_id,
+    });
+    res.status(201).json({
+        message: "TrainingProg Created!!",
+        TrainingProg: newTrainingProg,
       });
       res.status(201).json({ message: 'TrainingProg Created!!', TrainingProg: newTrainingProg });
     } catch (error) {
@@ -29,3 +33,6 @@ router.post('/', async (req, res) => {
   });
   
   module.exports = router;
+
+module.exports = router;
+

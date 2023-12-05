@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-export const Navbar = () => {
+export const NavbarUser = () => {
   const history = useHistory();
 
   return (
     <div className="navbar">
-      <Link className="link" to="/coach">
+      <Link className="link" to="/user">
         My Profile
       </Link>
-      <Link className="link" to="/coachexercise">
-        Add Exercises
+      <Link className="link" to="/userexercise">
+        My Exercises
       </Link>
       <Link className="link" to="/">
         Lorem, ipsum dolor.

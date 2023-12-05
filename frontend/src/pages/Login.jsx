@@ -11,6 +11,8 @@ export const Login = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let canlogUser = false;
+    let canlogCoach = false;
+
     const user = {
       email: e.target[0].value,
       password: e.target[1].value,
@@ -51,6 +53,28 @@ export const Login = (props) => {
           //data.user._id
           logInTrainer(data.coach);
           history.push("/coach");
+        } else {
+          console.error("User Login failed");
+          canlogCoach = true;
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+    if (canlogCoach) {
+      try {
+        const response = await fetch("http://localhost:3000/admin/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          //data.user._id
+          history.push("/admin");
         } else {
           console.error("User Login failed");
         }

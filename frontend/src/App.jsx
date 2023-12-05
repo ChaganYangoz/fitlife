@@ -12,6 +12,8 @@ import { UserSessionContext } from "./pages/user-context";
 import { TrainerSessionContext } from "./pages/coach-context";
 import { CoachProfile } from "./pages/CoachProfile";
 import { UpdateCoach } from "./pages/UpdateCoach";
+import { UserExercise } from "./pages/UserExercise";
+import { CoachExercise } from "./pages/CoachExercise";
 
 function App() {
   const [user, setUser] = useState({});
@@ -72,6 +74,12 @@ function App() {
               </Route>
               <Route path="/coachupdate">
                 <UpdateCoach />
+              </Route>
+              <Route path="/userexercise">
+                <UserExercise />
+              </Route>
+              <Route path="/coachexercise">
+                <CoachExercise />
               </Route>
             </Switch>
           </div>
