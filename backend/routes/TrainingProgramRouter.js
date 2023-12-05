@@ -10,12 +10,10 @@ router.post("/add", async (req, res) => {
       user_id,
       coach_id,
     });
-    res
-      .status(201)
-      .json({
-        message: "TrainingProg Created!!",
-        TrainingProg: newTrainingProg,
-      });
+    res.status(201).json({
+      message: "TrainingProg Created!!",
+      TrainingProg: newTrainingProg,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

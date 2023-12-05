@@ -14,6 +14,8 @@ import { CoachProfile } from "./pages/CoachProfile";
 import { UpdateCoach } from "./pages/UpdateCoach";
 import { UserExercise } from "./pages/UserExercise";
 import { CoachExercise } from "./pages/CoachExercise";
+import { UserNutrition } from "./pages/UserNutrition";
+import { CoachNutrition } from "./pages/CoachNutrition";
 
 function App() {
   const [user, setUser] = useState({});
@@ -80,6 +82,12 @@ function App() {
               </Route>
               <Route path="/coachexercise">
                 <CoachExercise />
+              </Route>
+              <Route path="/usernutrition">
+                <UserNutrition />
+              </Route>
+              <Route path="coachnutrition">
+                <CoachNutrition />
               </Route>
             </Switch>
           </div>

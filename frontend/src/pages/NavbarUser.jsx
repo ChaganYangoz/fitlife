@@ -12,8 +12,8 @@ export const NavbarUser = () => {
       <Link className="link" to="/userexercise">
         My Exercises
       </Link>
-      <Link className="link" to="/">
-        Lorem, ipsum dolor.
+      <Link className="link" to="/usernutrition">
+        My Nutritions
       </Link>
       <button onClick={() => history.push("/login")}>Log-out</button>
     </div>
