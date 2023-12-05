@@ -19,4 +19,20 @@ router.post("/add", async (req, res) => {
   }
 });
 
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const userTrainingProgs = await TrainingProg.find({ user_id: userId });
+
+
+    const trainingProgNames = userTrainingProgs.map(prog => prog.name);
+
+    res.status(200).json({ trainingPrograms: trainingProgNames });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
 module.exports = router;
