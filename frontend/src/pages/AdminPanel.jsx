@@ -134,7 +134,8 @@ const AdminPanel = () => {
 
   return (
     <div className="userContainer">
-      <div className="leftbar">
+      <div className="leftadminbar">
+        <h2>Admin Panel</h2>
         <button
           onClick={() => {
             togglePopup();
@@ -152,6 +153,7 @@ const AdminPanel = () => {
         >
           Add User
         </button>
+        <button onClick={() => history.push("/login")}>Log-out</button>
       </div>
       {isOpen && (
         <div className="modal">
@@ -159,7 +161,7 @@ const AdminPanel = () => {
             <span className="close" onClick={togglePopup}>
               &times;
             </span>
-            <form onSubmit={handleSubmit}>
+            <form className="modalform" onSubmit={handleSubmit}>
               <input type="text" placeholder="name" />
               <input type="text" placeholder="surname" />
               <input type="text" placeholder="email" />
@@ -199,38 +201,40 @@ const AdminPanel = () => {
           </div>
         </div>
       )}
-      <>
-        {data && (
-          <>
-            {data.coaches.map((coach) => (
-              <div className="usercard" key={coach._id}>
-                {coach.name} {coach.surname} <br />
-                {coach.email}
-                <div>
-                  <button>Update</button>
+      <div className="personcard">
+        <>
+          {data && (
+            <>
+              {data.coaches.map((coach) => (
+                <div className="usercard" key={coach._id}>
+                  {coach.name} {coach.surname} <br />
+                  {coach.email}
+                  <div>
+                    <button>Update</button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </>
-        )}
-      </>
-      <>
-        {data1 && (
-          <>
-            {data1.users.map((user) => (
-              <div className="usercard" key={user._id}>
-                {user.name} {user.surname} <br />
-                {user.email}
-                <div>
-                  <button value={user._id} onClick={userClick}>
-                    Update
-                  </button>
+              ))}
+            </>
+          )}
+        </>
+        <>
+          {data1 && (
+            <>
+              {data1.users.map((user) => (
+                <div className="usercard" key={user._id}>
+                  {user.name} {user.surname} <br />
+                  {user.email}
+                  <div>
+                    <button value={user._id} onClick={userClick}>
+                      Update
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </>
-        )}
-      </>
+              ))}
+            </>
+          )}
+        </>
+      </div>
     </div>
   );
 };
