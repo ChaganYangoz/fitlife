@@ -2,6 +2,7 @@ import { useUserSession } from "./user-context";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { NavbarUser } from "./NavbarUser";
 
 export const UserProfile = () => {
   const { user } = useUserSession();
@@ -65,7 +66,8 @@ export const UserProfile = () => {
   };*/
   return (
     <div className="usercontainer">
-      <div>
+      <NavbarUser />
+      <div className="userProf">
         <img className="pp" alt="preview image" src={user.photo} />
         <div>
           {user.name} <br />
@@ -76,14 +78,14 @@ export const UserProfile = () => {
           {user.date} <br />
           {user.gender}
         </div>
+        <button
+          onClick={() => {
+            history.push("/userupdate");
+          }}
+        >
+          Update
+        </button>
       </div>
-      <button
-        onClick={() => {
-          history.push("/userupdate");
-        }}
-      >
-        Update
-      </button>
     </div>
   );
 };
