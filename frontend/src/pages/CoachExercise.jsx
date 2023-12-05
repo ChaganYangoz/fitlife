@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export const CoachExercise = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [id, setId] = useState("");
 
   const { trainer } = useTrainerSession();
   const [data, setData] = useState(null);
@@ -21,12 +22,11 @@ export const CoachExercise = () => {
     if (!data || !data.userIds || data.userIds.length === 0) {
       return <div>Users not found</div>;
     }
-
     // Kullanıcıları ekrana yazdır
     return (
       <div>
         {data.userIds.map((user) => (
-          <div className="userList" key={user.id}>
+          <div className="userList" key={user._id}>
             <div>
               <img src={user.photo} alt="user photo" />
             </div>
@@ -35,9 +35,10 @@ export const CoachExercise = () => {
             </div>
             <div>
               <button
-                value={user.id}
-                onClick={() => {
+                value={user._id}
+                onClick={(e) => {
                   togglePopup();
+                  setId(e.currentTarget.value);
                 }}
               >
                 Add Exercise
@@ -49,7 +50,32 @@ export const CoachExercise = () => {
     );
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const training = {
+      name: e.target[0].value,
+      user_id: id,
+      coach_id: trainer.id,
+    };
+    try {
+      const response = await fetch("http://localhost:3000/trainingProg/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(training),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+      } else {
+        console.error("failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    setIsOpen(!open);
+  };
 
   const showCoachsUsers = async () => {
     try {
@@ -85,8 +111,6 @@ export const CoachExercise = () => {
             </span>
             <form className="modalform" onSubmit={handleSubmit}>
               <input type="text" placeholder="Exercise Name" />
-              <input type="text" placeholder="Per Week" />
-              <input type="text" placeholder="How Long" />
 
               <button type="submit">Add</button>
             </form>

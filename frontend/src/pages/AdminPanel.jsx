@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useUserSession } from "./user-context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useTrainerSession } from "./coach-context";
 
 const AdminPanel = () => {
   const { logIn } = useUserSession();
+  const { logInTrainer } = useTrainerSession();
+
   const history = useHistory();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -132,6 +135,15 @@ const AdminPanel = () => {
     });
   };
 
+  const coachClick = (e) => {
+    data.coaches.map((coach) => {
+      if (coach._id === e.target.value) {
+        logInTrainer(coach);
+        history.push("/coachupdate");
+      }
+    });
+  };
+
   return (
     <div className="userContainer">
       <div className="leftadminbar">
@@ -210,7 +222,9 @@ const AdminPanel = () => {
                   {coach.name} {coach.surname} <br />
                   {coach.email}
                   <div>
-                    <button>Update</button>
+                    <button value={coach._id} onClick={coachClick}>
+                      Update
+                    </button>
                   </div>
                 </div>
               ))}
