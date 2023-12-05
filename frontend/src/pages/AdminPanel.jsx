@@ -6,7 +6,6 @@ const AdminPanel = () => {
   const { logIn } = useUserSession();
   const history = useHistory();
 
-  const [selectedId, setSelectedID] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [role, setRole] = useState("");
   const [data, setData] = useState(null);
