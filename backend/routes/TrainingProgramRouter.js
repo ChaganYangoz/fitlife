@@ -4,9 +4,11 @@ var router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-      const {user_id} = req.body;
+      const {name, user_id, coach_id} = req.body;
       const newTrainingProg = await TrainingProg.create({
-        user_id
+        name,
+        user_id,
+        coach_id
       });
       res.status(201).json({ message: 'TrainingProg Created!!', TrainingProg: newTrainingProg });
     } catch (error) {
