@@ -38,20 +38,29 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }); // E-postaya göre kullanıcıyı bul
+    const user = await User.findOne({ email });
 
-    bcrypt.compare(password, hashedPassword, (err, result) => {
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // Compare entered password with hashed password from the database
+    bcrypt.compare(password, user.password, (err, result) => {
       if (result) {
-        res.status(200).json({ message: 'Login successful', user });
+        // Passwords match, login successful
+        return res.status(200).json({ message: 'Login successful', user });
       } else {
-        res.status(401).json({ message: 'Invalid email or password' });
+        // Passwords don't match, login failed
+        return res.status(401).json({ message: 'Invalid email or password' });
       }
     });
-
+    
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 
 router.get("/showall", async (req, res) => {
   try {
